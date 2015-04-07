@@ -3,7 +3,7 @@ package com.tedneward.example;
 import java.beans.*;
 import java.util.*;
 
-public class Person {
+public class Person implements Comparable<Person> {
   private int age;
   private String name;
   private double salary;
@@ -35,6 +35,25 @@ public class Person {
   public String getSSN() {
     return ssn;
   }
+
+  public void setAge(int a) {
+    if (a < 0) {
+      throw new IllegalArgumentException("Value can't be negative");
+    }
+    age = a;
+  }
+
+  public void setName(String n) {
+    if (n == null) {
+      throw new IllegalArgumentException("Value can't be null");
+    }
+    name = n;
+  }
+
+  public void setSalary(double s) {
+    salary = s;
+  }
+
   public void setSSN(String value) {
     String old = ssn;
     ssn = value;
@@ -42,6 +61,7 @@ public class Person {
     this.pcs.firePropertyChange("ssn", old, value);
     propertyChangeFired = true;
   }
+
   public boolean getPropertyChangeFired() {
     return propertyChangeFired;
   }
@@ -59,11 +79,33 @@ public class Person {
   }
   
   public boolean equals(Person other) {
-    return (this.name.equals(p.name) && this.age == p.age);
+    return (this.name.equals(other.name) && this.age == other.age);
   }
 
-  public String tostring() {
-    return "{{FIXME}}";
+  public String toString() {
+    return ("[Person name:" + this.name + " age:" + this.age + " salary:" + this.salary + "]");
+  }
+
+  @Override
+  public int compareTo(Person other) {
+    return (int)(other.getSalary() - this.salary);
+  }
+
+  public static ArrayList<Person> getNewardFamily() {
+    ArrayList<Person> list = new ArrayList<Person>();
+    list.add(new Person("Ted", 41, 250000));
+    list.add(new Person("Charlotte", 43, 150000));
+    list.add(new Person("Michael", 22, 10000));
+    list.add(new Person("Matthew", 15, 0));
+
+    return list;
+  }
+
+  public static class AgeComparator implements Comparator<Person> {
+    @Override
+    public int compare(Person p1, Person p2) {
+      return p1.getAge() - p2.getAge();
+    }
   }
 
   // PropertyChangeListener support; you shouldn't need to change any of
