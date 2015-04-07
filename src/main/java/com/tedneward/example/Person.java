@@ -78,8 +78,12 @@ public class Person implements Comparable<Person> {
     return age + 10;
   }
   
-  public boolean equals(Person other) {
-    return (this.name.equals(other.name) && this.age == other.age);
+  public boolean equals(Object obj) {
+  if (obj instanceof Person) {
+    Person other = (Person)obj;
+    return (this.name.equals(other.name) && this.age == other.age); 
+  }
+    return false;
   }
 
   public String toString() {
