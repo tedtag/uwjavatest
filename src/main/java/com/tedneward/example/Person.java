@@ -9,6 +9,7 @@ public class Person implements Comparable<Person> {
   private double salary;
   private String ssn;
   private boolean propertyChangeFired = false;
+  private static int instanceCount = 0;
   
   public Person() {
     this("", 0, 0.0d);
@@ -18,6 +19,7 @@ public class Person implements Comparable<Person> {
     name = n;
     age = a;
     salary = s;
+    instanceCount++;
   }
 
   public int getAge() {
@@ -64,6 +66,10 @@ public class Person implements Comparable<Person> {
 
   public boolean getPropertyChangeFired() {
     return propertyChangeFired;
+  }
+
+  public int count() {
+    return instanceCount;
   }
 
   public double calculateBonus() {
